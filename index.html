@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Leitor de ZIP 1.4.0-alpha</title> <!--atencao ao versionamento semantico -->
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Leitor de arquivos ZIP 1.4.0-alpha</h2> <!--atencao ao versionamento semantico -->
+
+<div class="upload">
+
+<input type="file" id="zipInput" accept=".zip" multiple>
+
+</div>
+
+<h3>Arquivos:</h3> 
+
+<ul id="fileList"></ul> 
+
+<h3>Conteúdo do arquivo:</h3>
+
+<pre id="content">Nenhum arquivo selecionado.</pre>
+
+<h3>Resumo:</h3>
+
+<pre id="summary">Total de ICMS: R$ 0.00</pre>
+
+<div class="manual-icms">
+    <input type="number" id="manualIcmsInput" placeholder="Valor ICMS manual" step="0.01" min="0" />
+    <button id="manualIcmsButton">Adicionar ICMS de compra</button>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
