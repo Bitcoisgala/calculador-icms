@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar XMLs – Painel ICMS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- sidebar -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-title"><span>Profissional</span> Fiscal</div>
+      <div class="brand-sub">Gestão de ICMS</div>
+    </div>
+
+    <div class="user-avatar">
+      <div class="avatar-circle"></div>
+    </div>
+
+    <nav>
+      <button class="nav-item" onclick="window.location.href='index-novo.html'">
+        <i class="fa-solid fa-table-columns"></i> Painel
+      </button>
+      <button class="nav-item active">
+        <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
+      </button>
+      <button class="nav-item" onclick="setActive(this)">
+        <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="setActive(this)">
+        <i class="fa-solid fa-headset"></i> Suporte
+      </button>
+    </div>
+
+  </aside>
+
+  <!--conteudo da tela-->
+  <main class="xml-main">
+
+    <div class="topbar">
+      <div>
+        <div class="page-title">Enviar XMLs</div>
+        <div class="page-sub">Envie arquivos XML de vendas, devoluções ou cancelamentos.</div>
+      </div>
+    </div>
+
+    <!-- aviso laranja -->
+    <div class="xml-aviso">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span>
+        <strong>Atenção:</strong> Cadastre seus CNPJs na página de CNPJs para que o sistema identifique automaticamente
+        vendas e devoluções.
+      </span>
+    </div>
+
+    <!-- Abas -->
+    <div class="xml-abas">
+      <button class="xml-aba ativa" id="aba-xml" onclick="trocarAba('xml')">
+        <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
+      </button>
+      <button class="xml-aba" id="aba-manual" onclick="trocarAba('manual')">
+        <i class="fa-regular fa-file"></i> Nota Manual
+      </button>
+    </div>
+
+    <!-- painel enviar xmls-->
+    <div id="painel-xml">
+      <div class="xml-dropzone" id="dropzone"
+           ondragover="event.preventDefault()"
+           ondrop="receberArquivo(event)">
+
+        <div class="xml-drop-icon">
+          <i class="fa-solid fa-file-arrow-down"></i>
+        </div>
+
+        <div class="xml-drop-texto">Arraste arquivos XML ou ZIP aqui</div>
+        <div class="xml-drop-sub">ou clique para selecionar</div>
+
+        <input type="file" id="input-arquivo" accept=".xml,.zip" multiple
+               style="display:none" onchange="processarArquivos(this.files)">
+
+        <button class="xml-btn-arquivo" onclick="document.getElementById('input-arquivo').click()">
+          <i class="fa-regular fa-file"></i> Arquivos
+        </button>
+
+      </div>
+
+      <div id="xml-resultado" style="display:none" class="xml-form-card" style="margin-top:16px">
+        <div class="xml-form-header">
+          <i class="fa-solid fa-list-check"></i>
+          Notas lidas
+        </div>
+        <div id="xml-lista-notas"></div>
+      </div>
+    </div>
+
+    <!-- painel nota manual -->
+    <div id="painel-manual" style="display:none">
+
+      <div class="xml-form-card">
+        <div class="xml-form-header">
+          <i class="fa-regular fa-file"></i>
+          Dados da Nota de Compra
+        </div>
+
+        <div class="xml-form-grid">
+          <div class="xml-campo">
+            <label for="numero-nota">Número da Nota</label>
+            <input type="text" id="numero-nota" placeholder="001234">
+          </div>
+          <div class="xml-campo">
+            <label for="data-emissao">Data de Emissão</label>
+            <input type="date" id="data-emissao">
+          </div>
+          <div class="xml-campo">
+            <label for="valor-total">Valor Total (R$)</label>
+            <input type="number" id="valor-total" placeholder="0,00" min="0" step="0.01">
+          </div>
+          <div class="xml-campo">
+            <label for="valor-icms">Valor ICMS (R$)</label>
+            <input type="number" id="valor-icms" placeholder="0,00" min="0" step="0.01">
+          </div>
+        </div>
+
+        <button class="xml-btn-salvar" onclick="salvarNotaManual()">
+          Salvar Nota
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="xml-script.js"></script>
+</body>
+</html>

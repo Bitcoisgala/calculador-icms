@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel ICMS</title>
+
+  <!-- Fonte Inter do Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Ícones Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Biblioteca pra fazer o gráfico -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!--  menu lateral -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-title"><span>Profissional</span> Fiscal</div>
+      <div class="brand-sub">Gestão de ICMS</div>
+    </div>
+
+    <!-- foto do usuário (só visual por enquanto) -->
+    <div class="user-avatar">
+      <div class="avatar-circle"></div>
+    </div>
+
+  
+    <nav>
+      <button class="nav-item active" onclick="setActive(this)">
+        <i class="fa-solid fa-table-columns"></i> Painel
+      </button>
+
+      <!--leva para a tela de envio de XMLs -->
+      <button class="nav-item" onclick="irParaXML()">
+        <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
+      </button>
+
+      <button class="nav-item" onclick="setActive(this)">
+        <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="setActive(this)">
+        <i class="fa-solid fa-headset"></i> Suporte
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- == conteudo principal == -->
+  <main class="main">
+
+    <!-- cabeçalho -->
+    <div class="topbar">
+      <div>
+        <div class="page-title">Painel de ICMS</div>
+        <div class="page-sub">Resumo geral das notas fiscais e cálculo de ICMS</div>
+      </div>
+      <button class="btn-clear" onclick="limparDados()">
+        <i class="fa-solid fa-trash"></i> Limpar
+      </button>
+    </div>
+
+    <!--  CARDS  -->
+    <div class="cards-grid">
+
+      <div class="card compras">
+        <div class="card-header">
+          <span class="card-label">Compras</span>
+          <i class="fa-solid fa-cart-shopping compras-icon"></i>
+        </div>
+        <div class="card-value" id="val-compras">R$ 0,00</div>
+        <div class="card-meta" id="meta-compras">0 nota(s)</div>
+      </div>
+
+      <div class="card vendas">
+        <div class="card-header">
+          <span class="card-label">Vendas</span>
+          <i class="fa-solid fa-arrow-trend-up vendas-icon"></i>
+        </div>
+        <div class="card-value" id="val-vendas">R$ 0,00</div>
+        <div class="card-meta" id="meta-vendas">0 nota(s)</div>
+      </div>
+
+      <div class="card cancel">
+        <div class="card-header">
+          <span class="card-label">Devoluções</span>
+          <i class="fa-solid fa-rotate-left cancel-icon"></i>
+        </div>
+        <div class="card-value" id="val-cancel">R$ 0,00</div>
+        <div class="card-meta" id="meta-cancel">0 nota(s)</div>
+      </div>
+
+      <div class="card credito">
+        <div class="card-header">
+          <span class="card-label">Crédito</span>
+          <i class="fa-solid fa-credit-card credito-icon"></i>
+        </div>
+        <div class="card-value" id="val-credito">R$ 0,00</div>
+        <div class="card-meta">Saldo do período</div>
+      </div>
+
+    </div>
+
+    <!-- GRÁFICO -->
+    <div class="chart-card">
+      <div class="chart-title">Total por tipo</div>
+      <div class="chart-wrap">
+
+        <!-- aparece quando não tem nenhuma nota ainda -->
+        <div class="empty-state" id="empty-bar">
+          <i class="fa-solid fa-chart-simple empty-icon"></i>
+          <p>Nenhuma nota</p>
+          <p class="empty-sub">Insira notas manualmente ou envie XMLs para ver o resumo aqui.</p>
+        </div>
+
+        <canvas id="barChart" style="display:none"></canvas>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="xml-script.js"></script>
+</body>
+</html>
