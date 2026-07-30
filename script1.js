@@ -117,7 +117,7 @@ window.adicionarNota = function(tipo, valor) {
   atualizarTela();
 };
 
-
+// comentar sobre sobre a diferença entre href direto e a function
 // leva o usuário para a tela de envio de XMLs
 function irParaXML() {
   window.location.href = 'xml-novo.html';

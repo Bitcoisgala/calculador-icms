@@ -149,6 +149,113 @@ nav {
   margin-top: 2px;
 }
 
+
+.historico-main {
+  flex: 1;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  background: var(--fundo);
+}
+
+.historico-card {
+  width: min(920px, 100%);
+  background: white;
+  border-radius: 18px;
+  border: 1px solid var(--borda);
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+  padding: 28px;
+  margin-top: 24px;
+}
+
+.historico-card-header {
+  margin-bottom: 20px;
+}
+
+.historico-info-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 16px;
+  align-items: center;
+}
+
+.historico-label {
+  display: block;
+  color: var(--texto);
+  font-size: 15px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.historico-value {
+  color: var(--texto);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.historico-card-body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.historico-metric {
+  background: #f8fbff;
+  border: 1px solid #e8eef6;
+  border-radius: 14px;
+  padding: 18px 16px;
+  text-align: center;
+  border-top: 4px solid transparent;
+}
+
+.historico-metric.vendas {
+  border-top-color: var(--verde);
+}
+
+.historico-metric.compras {
+  border-top-color: var(--azul);
+}
+
+.historico-metric.devolucoes {
+  border-top-color: var(--vermelho);
+}
+
+.historico-metric.icms {
+  border-top-color: #0f3f78;
+}
+
+.metric-title {
+  font-size: 13px;
+  color: var(--cinza);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.historico-metric.vendas .metric-value {
+  color: var(--verde);
+}
+
+.historico-metric.compras .metric-value {
+  color: var(--azul);
+}
+
+.historico-metric.devolucoes .metric-value {
+  color: var(--vermelho);
+}
+
+.historico-metric.icms .metric-value {
+  color: #0f3f78;
+}
+
 .btn-clear {
   padding: 8px 15px;
   border-radius: 6px;
@@ -462,3 +569,162 @@ nav {
 .xml-btn-salvar:hover {
   background: #0f48a8;
 }
+
+/* LOGIN / CADASTRO */
+
+.login-page {
+  min-height: 100vh;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Poppins, sans-serif;
+}
+
+.auth-card {
+  width: 1120px;
+  height: 560px;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.auth-left {
+  position: relative;
+  background: linear-gradient(135deg, #16077a, #2148ff);
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  width: 180px;
+  height: 850px;
+  background: #24119d;
+  transform: rotate(-45deg);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.shape-1 {
+  left: 90px;
+  top: -260px;
+  background: #2148ff;
+}
+
+.shape-2 {
+  left: 220px;
+  top: -130px;
+  background: #28149b;
+}
+
+.auth-tabs {
+  position: absolute;
+  right: -1px;
+  top: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-tabs button {
+  width: 150px;
+  padding: 17px 20px;
+  border: none;
+  border-radius: 35px 0 0 35px;
+  font-size: 18px;
+  color: #6f7788;
+  background: #cfd5e6;
+  cursor: pointer;
+}
+
+.auth-tabs button.active {
+  background: white;
+  color: #6f7788;
+}
+
+.auth-right {
+  padding: 70px 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-right h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.auth-right p {
+  text-align: center;
+  color: #7c8496;
+  font-size: 14px;
+  margin-bottom: 34px;
+}
+
+.auth-right label {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.auth-right input {
+  height: 43px;
+  border: none;
+  border-radius: 5px;
+  background: #f3f4f6;
+  padding: 0 14px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  outline: none;
+}
+
+.auth-right small {
+  color: #7c8496;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.auth-btn {
+  height: 44px;
+  border: none;
+  border-radius: 7px;
+  background: #1f66c9;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-top: 10px;
+}
+
+.auth-right a {
+  text-align: center;
+  margin-top: 22px;
+  color: #6394e8;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.auth-right.cadastro {
+  padding-top: 40px;
+}
+
+.auth-right.cadastro input {
+  margin-bottom: 14px;
+}
+
+.login-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.login-links a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #5d8fe7;
+}
+

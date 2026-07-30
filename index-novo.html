@@ -42,12 +42,16 @@
       </button>
 
       <!--leva para a tela de envio de XMLs -->
-      <button class="nav-item" onclick="irParaXML()">
+      <button class="nav-item" onclick="irParaXML()"> <!-- href por function -->
         <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
       </button>
 
-      <button class="nav-item" onclick="setActive(this)">
-        <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+      <button class="nav-item" onclick="window.location.href='Historico.html'"> <!-- href direto-->
+        <i class="fa-solid fa-clock-rotate-left"></i> Histórico 
+      </button>
+
+      <button class="nav-item" onclick="window.location.href='login.html'"> <!-- href direto-->
+        <i class="fa-solid fa-clock-rotate-left"></i> login
       </button>
     </nav>
 

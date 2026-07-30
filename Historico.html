@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historico</title>
+     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+     <!--  menu lateral -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-title"><span>Profissional</span> Fiscal</div>
+      <div class="brand-sub">Gestão de ICMS</div>
+    </div>
+
+    <!-- foto do usuário (só visual por enquanto) -->
+    <div class="user-avatar">
+      <div class="avatar-circle"></div>
+    </div>
+
+  
+    <nav>
+      <button class="nav-item active" onclick="window.location.href='index-novo.html'">
+        <i class="fa-solid fa-table-columns"></i> Painel
+      </button>
+
+      <!--leva para a tela de envio de XMLs -->
+      <button class="nav-item" onclick="window.location.href='xml-novo.html'"> <!-- href por function -->
+        <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
+      </button>
+
+      <button class="nav-item" onclick="window.location.href='Historico.html'"> <!-- href direto-->
+        <i class="fa-solid fa-clock-rotate-left"></i> Histórico 
+      </button>
+      <button class="nav-item" onclick="window.location.href='login.html'"> <!-- href direto-->
+        <i class="fa-solid fa-clock-rotate-left"></i> login
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="setActive(this)">
+        <i class="fa-solid fa-headset"></i> Suporte
+      </button>
+    </div>
+
+  </aside>
+  <main class="historico-main">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Histórico</div>
+        <div class="page-sub">Registro de todos os cálculos de ICMS realizados nessa sessão</div>
+      </div>
+    </div>
+
+    <section class="historico-card">
+      <div class="historico-card-header">
+        <div class="historico-info-row">
+          <div>
+            <span class="historico-label">Responsável:</span>
+            <span class="historico-value">Fulano</span>
+          </div>
+          <div>
+            <span class="historico-label">Data:</span>
+            <span class="historico-value">12/8/2026</span>
+          </div>
+          <div>
+            <span class="historico-label">Notas:</span>
+            <span class="historico-value">12</span>
+          </div>
+        </div>
+      </div>
+      <div class="historico-card-body">
+        <div class="historico-metric vendas">
+          <div class="metric-title">Vendas</div>
+          <div class="metric-value">R$ 1000,00</div>
+        </div>
+        <div class="historico-metric compras">
+          <div class="metric-title">Compras</div>
+          <div class="metric-value">R$ 500,00</div>
+        </div>
+        <div class="historico-metric devolucoes">
+          <div class="metric-title">Devoluções</div>
+          <div class="metric-value">R$ 200,00</div>
+        </div>
+        <div class="historico-metric icms">
+          <div class="metric-title">ICMS a pagar</div>
+          <div class="metric-value">R$ 300,00</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="historico-card">
+      <div class="historico-card-header">
+        <div class="historico-info-row">
+          <div>
+            <span class="historico-label">Responsável:</span>
+            <span class="historico-value">ciclano</span>
+          </div>
+          <div>
+            <span class="historico-label">Data:</span>
+            <span class="historico-value">2/4/2026</span>
+          </div>
+          <div>
+            <span class="historico-label">Notas:</span>
+            <span class="historico-value">3</span>
+          </div>
+        </div>
+      </div>
+      <div class="historico-card-body">
+        <div class="historico-metric vendas">
+          <div class="metric-title">Vendas</div>
+          <div class="metric-value">R$ 100,00</div>
+        </div>
+        <div class="historico-metric compras">
+          <div class="metric-title">Compras</div>
+          <div class="metric-value">R$ 50,00</div>
+        </div>
+        <div class="historico-metric devolucoes">
+          <div class="metric-title">Devoluções</div>
+          <div class="metric-value">R$ 20,00</div>
+        </div>
+        <div class="historico-metric icms">
+          <div class="metric-title">ICMS a pagar</div>
+          <div class="metric-value">R$ 30,00</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
