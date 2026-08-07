@@ -8,9 +8,10 @@
      
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 
 <div class="app">
      <!--  menu lateral -->
@@ -25,10 +26,11 @@
     <div class="user-avatar">
       <div class="avatar-circle"></div>
     </div>
+        <h2 id="empresaNome"></h2>
 
   
     <nav>
-      <button class="nav-item active" onclick="window.location.href='index-novo.html'">
+      <button class="nav-item" onclick="window.location.href='index-novo.html'">
         <i class="fa-solid fa-table-columns"></i> Painel
       </button>
 
@@ -37,11 +39,8 @@
         <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
       </button>
 
-      <button class="nav-item" onclick="window.location.href='Historico.html'"> <!-- href direto-->
+      <button class="nav-item active" onclick="window.location.href='Historico.html'"> <!-- href direto-->
         <i class="fa-solid fa-clock-rotate-left"></i> Histórico 
-      </button>
-      <button class="nav-item" onclick="window.location.href='login.html'"> <!-- href direto-->
-        <i class="fa-solid fa-clock-rotate-left"></i> login
       </button>
     </nav>
 
@@ -50,6 +49,11 @@
         <i class="fa-solid fa-headset"></i> Suporte
       </button>
     </div>
+
+        <button class="logout-btn" onclick="logout()">
+  <i class="fa-solid fa-right-from-bracket"></i>
+  Sair
+</button>
 
   </aside>
   <main class="historico-main">
@@ -135,5 +139,13 @@
     </section>
   </main>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+<script src="xml-script.js"></script>
+<script src="auth.js"></script>
+
+</body>
 </body>
 </html>

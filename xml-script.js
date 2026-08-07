@@ -289,6 +289,29 @@ function processarXmlContent(text, path) {
         tpNF: tipoNF
     };
 
+    const empresa = JSON.parse(
+  localStorage.getItem('empresa')
+)
+
+await banco
+  .from('nfe_chaves')
+  .insert([
+    {
+      chave: chave,
+
+      empresa_id: empresa.id,
+
+      tipo:
+        tipo === 'vendas'
+          ? 'venda'
+          : 'devolucao',
+
+      valor: valorICMS,
+
+      valor_icms: valorICMS
+    }
+  ])
+
     notasProcessadas.push(nota);
     if (window.adicionarNota) {
         window.adicionarNota(nota.tipo, nota.icms);
@@ -374,6 +397,26 @@ function salvarNotaManual() {
     if (window.adicionarNota) {
         window.adicionarNota('compras', valorIcmsNumero);
     }
+
+    const empresa = JSON.parse(
+  localStorage.getItem('empresa')
+)
+
+await banco
+  .from('nfe_chaves')
+  .insert([
+    {
+      chave: Date.now().toString().padEnd(44, '0'),
+
+      empresa_id: empresa.id,
+
+      tipo: 'compra',
+
+      valor: valorIcmsNumero,
+
+      valor_icms: valorIcmsNumero
+    }
+  ])
 
     adicionarMensagem(`Nota manual salva: ${numeroNota.value || 'sem número'} - ICMS R$ ${valorIcmsNumero.toFixed(2)}`);
 

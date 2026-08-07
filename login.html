@@ -50,24 +50,19 @@ Entre com suas credenciais ou crie uma nova empresa.
 
 <label>E-mail</label>
 
-<input
-type="email"
-placeholder="admin@empresa.com"
->
+<input type="email" id="email">
 
 
 <label>Senha</label>
 
-<input
-type="password"
-placeholder="Mínimo 6 caracteres"
->
+<input type="password" id="senha">
 
 
-<button class="auth-btn"
-onclick="window.location.href='index-novo.html'">
+<button
+  class="auth-btn"
+  onclick="loginEmpresa()">
 
-Entrar
+  Entrar
 
 </button>
 
@@ -92,6 +87,74 @@ Esqueci a senha
 </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+
+async function loginEmpresa() {
+
+  const email = document
+    .getElementById('email')
+    .value
+
+  const senha = document
+    .getElementById('senha')
+    .value
+
+
+
+  const { data, error } = await banco
+    .from('empresas')
+    .select('*')
+    .ilike('email', email)
+    .eq('senha', senha)
+
+
+
+  console.log(data)
+  console.log(error)
+
+
+
+  if (error) {
+
+    alert(error.message)
+
+    return
+  }
+
+
+
+  if (!data || data.length === 0) {
+
+    alert('E-mail ou senha inválidos')
+
+    return
+  }
+
+
+
+  localStorage.setItem(
+    'empresa',
+    JSON.stringify(data[0])
+  )
+
+
+
+  alert('Login realizado com sucesso!')
+
+
+
+  window.location.href = 'index-novo.html'
+}
+
+</script>
+
+</script>
+
+</script>
 
 </body>
 

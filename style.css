@@ -310,15 +310,37 @@ nav {
   font-size: 18px;
 }
 
-.compras    { border-top: 3px solid var(--azul); }
-.vendas     { border-top: 3px solid var(--verde); }
-.cancel     { border-top: 3px solid var(--vermelho); }
-.credito    { border-top: 3px solid var(--roxo); }
+.compras {
+  border-top: 3px solid var(--azul);
+}
 
-.compras-icon { color: var(--azul); }
-.vendas-icon  { color: var(--verde); }
-.cancel-icon  { color: var(--vermelho); }
-.credito-icon { color: var(--roxo); }
+.vendas {
+  border-top: 3px solid var(--verde);
+}
+
+.cancel {
+  border-top: 3px solid var(--vermelho);
+}
+
+.credito {
+  border-top: 3px solid var(--roxo);
+}
+
+.compras-icon {
+  color: var(--azul);
+}
+
+.vendas-icon {
+  color: var(--verde);
+}
+
+.cancel-icon {
+  color: var(--vermelho);
+}
+
+.credito-icon {
+  color: var(--roxo);
+}
 
 .card-value {
   font-size: 22px;
@@ -574,6 +596,7 @@ nav {
 
 .login-page {
   min-height: 100vh;
+  padding: 30px 0;
   background: #f3f3f3;
   display: flex;
   align-items: center;
@@ -581,41 +604,123 @@ nav {
   font-family: Poppins, sans-serif;
 }
 
+/* CARD */
+
 .auth-card {
   width: 1120px;
-  height: 560px;
+  min-height: 560px;
+
   background: white;
-  border-radius: 18px;
+
+  border-radius: 22px;
+
   overflow: hidden;
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.12);
 }
+
+
+/* LADO ESQUERDO */
 
 .auth-left {
   position: relative;
-  background: linear-gradient(135deg, #16077a, #2148ff);
   overflow: hidden;
+
+  background:
+    linear-gradient(135deg,
+      #11006e 0%,
+      #233dff 100%);
 }
 
-.shape {
-  position: absolute;
-  width: 180px;
-  height: 850px;
-  background: #24119d;
-  transform: rotate(-45deg);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
+
+/* FAIXA PRINCIPAL */
 
 .shape-1 {
-  left: 90px;
+  position: absolute;
+
+  width: 180px;
+  height: 1200px;
+
+  background:
+    linear-gradient(180deg,
+      rgba(89, 108, 255, 0.95),
+      rgba(54, 35, 204, 0.95));
+
+  left: 120px;
   top: -260px;
-  background: #2148ff;
+
+  transform: rotate(-45deg);
+
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.18);
 }
 
+
+/* FAIXA SECUNDÁRIA */
+
 .shape-2 {
-  left: 220px;
-  top: -130px;
-  background: #28149b;
+  position: absolute;
+
+  width: 180px;
+  height: 1200px;
+
+  background:
+    linear-gradient(180deg,
+      rgba(36, 23, 173, 0.95),
+      rgba(27, 10, 120, 0.95));
+
+  left: -40px;
+  top: -120px;
+
+  transform: rotate(-45deg);
+
+  opacity: 0.95;
+}
+
+
+/* TERCEIRA FAIXA */
+
+.auth-left::before {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 1000px;
+
+  background:
+    linear-gradient(180deg,
+      rgba(30, 73, 255, 0.95),
+      rgba(26, 36, 190, 0.95));
+
+  right: -40px;
+  top: -180px;
+
+  transform: rotate(-45deg);
+
+  opacity: 0.9;
+}
+
+
+/* SOMBRA SUAVE */
+
+.auth-left::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.03),
+      rgba(0, 0, 0, 0.12));
+
+  pointer-events: none;
 }
 
 .auth-tabs {
@@ -694,7 +799,7 @@ nav {
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-top: 10px;
 }
 
@@ -708,6 +813,7 @@ nav {
 
 .auth-right.cadastro {
   padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .auth-right.cadastro input {
@@ -728,3 +834,72 @@ nav {
   color: #5d8fe7;
 }
 
+#empresaNome {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.logout-btn {
+
+  width: 100%;
+
+  padding: 12px 16px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: linear-gradient(135deg,
+      #ff4d4d,
+      #d91e1e);
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  font-family: Inter, sans-serif;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  transition:
+    transform 0.2s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+
+  box-shadow:
+    0 8px 18px rgba(217, 30, 30, 0.25);
+}
+
+.logout-btn:hover {
+
+  transform: translateY(-2px);
+
+  opacity: 0.95;
+
+  box-shadow:
+    0 12px 24px rgba(217, 30, 30, 0.35);
+}
+
+.logout-btn:active {
+
+  transform: scale(0.98);
+}
+
+.logout-btn i {
+
+  font-size: 15px;
+}

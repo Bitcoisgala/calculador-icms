@@ -3,141 +3,193 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-<title>
-Cadastro Empresa
-</title>
+  <title>
+    Cadastro Empresa
+  </title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
-<link rel="stylesheet"
-href="style.css">
+  <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body class="login-page">
 
-<div class="auth-card">
+  <div class="auth-card">
 
-<div class="auth-left">
+    <div class="auth-left">
 
-<div class="shape shape-1"></div>
+      <div class="shape shape-1"></div>
 
-<div class="shape shape-2"></div>
+      <div class="shape shape-2"></div>
 
-<div class="auth-tabs">
+      <div class="auth-tabs">
 
-<button
-onclick="window.location.href='login-funcionario.html'">
+        <button
+          onclick="window.location.href='login-funcionario.html'">
 
-Funcionário
+          Funcionário
 
-</button>
+        </button>
 
-<button class="active">
+        <button class="active">
 
-Empresa
+          Empresa
 
-</button>
+        </button>
 
-</div>
+      </div>
 
-</div>
-
-
-
-<div class="auth-right cadastro">
-
-<h1>
-
-Área do Administrador
-
-</h1>
-
-<p>
-
-Entre com suas credenciais ou crie uma nova empresa.
-
-</p>
+    </div>
 
 
-<label>
-Nome da Empresa
-</label>
 
-<input
-type="text"
-placeholder="Empresa LTDA"
->
+    <div class="auth-right cadastro">
 
+      <h1>
+        Área do Administrador
+      </h1>
 
-<label>
-CNPJ
-</label>
-
-<input
-type="text"
-placeholder="00.000.000/0000-00"
->
+      <p>
+        Entre com suas credenciais ou crie uma nova empresa.
+      </p>
 
 
-<label>
-Seu Nome
-</label>
+      <label>
+        Nome da Empresa
+      </label>
 
-<input
-type="text"
-placeholder="João da Silva"
->
-
-
-<label>
-E-mail
-</label>
-
-<input
-type="email"
-placeholder="admin@empresa.com"
->
+      <input
+        type="text"
+        id="empresa"
+        placeholder="Empresa LTDA">
 
 
-<label>
-Senha
-</label>
+      <label>
+        CNPJ
+      </label>
 
-<input
-type="password"
-placeholder="Mínimo 6 caracteres"
->
-
-
-<button class="auth-btn"
-onclick="window.location.href='login.html'">
-
-Cadastrar Empresa
-
-</button>
+      <input
+        type="text"
+        id="cnpj"
+        placeholder="00.000.000/0000-00">
 
 
-<div class="login-links">
+      <label>
+        Seu Nome
+      </label>
 
-<a href="login.html">
+      <input
+        type="text"
+        id="nome"
+        placeholder="João da Silva">
 
-Já tem conta?
-Faça login
 
-</a>
+      <label>
+        E-mail
+      </label>
 
-</div>
+      <input
+        type="email"
+        id="email"
+        placeholder="admin@empresa.com">
 
-</div>
 
-</div>
+      <label>
+        Senha
+      </label>
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Mínimo 6 caracteres">
+
+
+      <button
+        class="auth-btn"
+        onclick="cadastrarEmpresa()">
+
+        Cadastrar Empresa
+
+      </button>
+
+
+      <div class="login-links">
+
+        <a href="login.html">
+          Já tem conta? Faça login
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- SUPABASE -->
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script>
+
+async function cadastrarEmpresa() {
+
+  const empresa =
+    document.getElementById('empresa').value
+
+  const cnpj =
+    document.getElementById('cnpj')
+    .value
+    .replace(/\D/g, '')
+
+  const nome =
+    document.getElementById('nome').value
+
+  const email =
+    document.getElementById('email').value
+
+  const senha =
+    document.getElementById('senha').value
+
+  const { data, error } = await banco
+    .from('empresas')
+    .insert([
+      {
+        razao_social: empresa,
+        nome_admin: nome,
+        cnpj: cnpj,
+        email: email,
+        senha: senha
+      }
+    ])
+    .select()
+
+  console.log(data)
+  console.log(error)
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  alert('Empresa cadastrada!')
+}
+
+</script>
+
+
+
 
 </body>
 
