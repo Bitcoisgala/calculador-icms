@@ -32,5 +32,7 @@ function logout() {
 
   localStorage.removeItem('empresa')
 
+  localStorage.removeItem('usuario')
+
   window.location.href = 'login.html'
 }

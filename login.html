@@ -143,6 +143,26 @@ async function loginEmpresa() {
 
 
 
+  /* ADICIONADO: identifica o usuário admin desta empresa
+     para o sistema de controle de acesso */
+
+  const { data: usuarioAdmin } = await banco
+    .from('usuarios')
+    .select('*')
+    .eq('empresa_id', data[0].id)
+    .eq('tipo', 'admin')
+    .limit(1)
+
+  if (usuarioAdmin && usuarioAdmin.length > 0) {
+
+    localStorage.setItem(
+      'usuario',
+      JSON.stringify(usuarioAdmin[0])
+    )
+  }
+
+
+
   alert('Login realizado com sucesso!')
 
 

@@ -73,6 +73,7 @@ Código da Empresa
 
 <input
 type="text"
+id="codigoEmpresa"
 maxlength="6"
 placeholder="______"
 >
@@ -93,6 +94,7 @@ Nome
 
 <input
 type="text"
+id="nomeFuncionario"
 placeholder="Seu nome completo"
 >
 
@@ -105,12 +107,13 @@ E-mail
 
 <input
 type="email"
+id="emailFuncionario"
 placeholder="admin@empresa.com"
 >
 
 
 <button class="auth-btn"
-onclick="window.location.href='index-novo.html'">
+onclick="loginFuncionario()">
 
 Entrar
 
@@ -119,6 +122,91 @@ Entrar
 </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script>
+
+/* ADICIONADO: login real do funcionário, usando a estrutura
+   já existente (empresas.codigo + usuarios.email + usuarios.tipo) */
+
+async function loginFuncionario() {
+
+  const codigo =
+    document.getElementById('codigoEmpresa').value.trim()
+
+  const nome =
+    document.getElementById('nomeFuncionario').value.trim()
+
+  const email =
+    document.getElementById('emailFuncionario').value.trim()
+
+  if (!codigo || !email) {
+
+    alert('Informe o código da empresa e o e-mail.')
+
+    return
+  }
+
+  const { data: empresas, error: erroEmpresa } = await banco
+    .from('empresas')
+    .select('*')
+    .eq('codigo', codigo)
+
+  if (erroEmpresa) {
+
+    alert(erroEmpresa.message)
+
+    return
+  }
+
+  if (!empresas || empresas.length === 0) {
+
+    alert('Código de empresa inválido.')
+
+    return
+  }
+
+  const empresa = empresas[0]
+
+  const { data: usuarios, error: erroUsuario } = await banco
+    .from('usuarios')
+    .select('*')
+    .eq('empresa_id', empresa.id)
+    .eq('tipo', 'funcionario')
+    .eq('ativo', true)
+    .ilike('email', email)
+
+  if (erroUsuario) {
+
+    alert(erroUsuario.message)
+
+    return
+  }
+
+  if (!usuarios || usuarios.length === 0) {
+
+    alert('Funcionário não encontrado ou inativo para essa empresa. Peça ao administrador para realizar o cadastro.')
+
+    return
+  }
+
+  localStorage.setItem(
+    'empresa',
+    JSON.stringify(empresa)
+  )
+
+  localStorage.setItem(
+    'usuario',
+    JSON.stringify(usuarios[0])
+  )
+
+  window.location.href = 'index-novo.html'
+}
+
+</script>
 
 </body>
 

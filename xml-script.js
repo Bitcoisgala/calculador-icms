@@ -293,6 +293,10 @@ function processarXmlContent(text, path) {
   localStorage.getItem('empresa')
 )
 
+const usuarioAtualXml = JSON.parse(
+  localStorage.getItem('usuario')
+)
+
 await banco
   .from('nfe_chaves')
   .insert([
@@ -300,6 +304,8 @@ await banco
       chave: chave,
 
       empresa_id: empresa.id,
+
+      usuario_id: usuarioAtualXml ? usuarioAtualXml.id : null,
 
       tipo:
         tipo === 'vendas'
@@ -402,6 +408,10 @@ function salvarNotaManual() {
   localStorage.getItem('empresa')
 )
 
+const usuarioAtualManual = JSON.parse(
+  localStorage.getItem('usuario')
+)
+
 await banco
   .from('nfe_chaves')
   .insert([
@@ -409,6 +419,8 @@ await banco
       chave: Date.now().toString().padEnd(44, '0'),
 
       empresa_id: empresa.id,
+
+      usuario_id: usuarioAtualManual ? usuarioAtualManual.id : null,
 
       tipo: 'compra',
 

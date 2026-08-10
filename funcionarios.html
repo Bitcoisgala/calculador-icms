@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funcionários – Painel ICMS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-admin-only="true">
+
+<div class="app">
+
+  <!-- sidebar (mesma estrutura das demais páginas) -->
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-title"><span>Profissional</span> Fiscal</div>
+      <div class="brand-sub">Gestão de ICMS</div>
+    </div>
+
+    <div class="user-avatar">
+      <div class="avatar-circle"></div>
+    </div>
+    <h2 id="empresaNome"></h2>
+
+    <nav>
+      <button class="nav-item" onclick="window.location.href='index-novo.html'">
+        <i class="fa-solid fa-table-columns"></i> Painel
+      </button>
+
+      <button class="nav-item" onclick="window.location.href='xml-novo.html'">
+        <i class="fa-solid fa-file-arrow-up"></i> Enviar XMLs
+      </button>
+
+      <button class="nav-item" onclick="window.location.href='Historico.html'">
+        <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+      </button>
+
+      <!-- ADICIONADO: só aparece para ADMIN -->
+      <button class="nav-item active" onclick="window.location.href='funcionarios.html'" data-requires-admin="true">
+        <i class="fa-solid fa-users"></i> Funcionários
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="setActive(this)">
+        <i class="fa-solid fa-headset"></i> Suporte
+      </button>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Sair
+    </button>
+
+  </aside>
+
+  <!-- conteúdo -->
+  <main class="xml-main">
+
+    <div class="topbar">
+      <div>
+        <div class="page-title">Funcionários</div>
+        <div class="page-sub">Cadastre e gerencie os funcionários da sua empresa</div>
+      </div>
+    </div>
+
+    <!-- form de cadastro, reaproveitando as classes do formulário de nota manual -->
+    <div class="xml-form-card">
+      <div class="xml-form-header">
+        <i class="fa-solid fa-user-plus"></i>
+        Cadastrar Funcionário
+      </div>
+
+      <div class="xml-form-grid">
+        <div class="xml-campo">
+          <label for="func-nome">Nome</label>
+          <input type="text" id="func-nome" placeholder="Nome completo">
+        </div>
+        <div class="xml-campo">
+          <label for="func-email">E-mail</label>
+          <input type="email" id="func-email" placeholder="funcionario@empresa.com">
+        </div>
+      </div>
+
+      <button class="xml-btn-salvar" onclick="cadastrarFuncionario()">
+        Cadastrar Funcionário
+      </button>
+    </div>
+
+    <!-- lista de funcionários, reaproveitando as classes de card do Histórico -->
+    <div id="lista-funcionarios" style="margin-top:16px"></div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="authz.js"></script>
+
+<script>
+
+/* ADICIONADO: gerenciamento de funcionários (somente ADMIN) */
+
+const empresaAtual = JSON.parse(localStorage.getItem('empresa'))
+const listaFuncionariosEl = document.getElementById('lista-funcionarios')
+
+async function carregarFuncionarios() {
+
+  if (!empresaAtual) return
+
+  const { data, error } = await banco
+    .from('usuarios')
+    .select('*')
+    .eq('empresa_id', empresaAtual.id)
+    .eq('tipo', 'funcionario')
+    .order('nome', { ascending: true })
+
+  if (error) {
+    listaFuncionariosEl.innerHTML =
+      '<p>Não foi possível carregar os funcionários.</p>'
+    return
+  }
+
+  if (!data || data.length === 0) {
+    listaFuncionariosEl.innerHTML =
+      '<p>Nenhum funcionário cadastrado ainda.</p>'
+    return
+  }
+
+  listaFuncionariosEl.innerHTML = ''
+
+  data.forEach(function (funcionario) {
+
+    const card = document.createElement('section')
+    card.className = 'historico-card'
+
+    card.innerHTML = `
+      <div class="historico-card-header">
+        <div class="historico-info-row">
+          <div>
+            <span class="historico-label">Nome:</span>
+            <span class="historico-value">${funcionario.nome}</span>
+          </div>
+          <div>
+            <span class="historico-label">E-mail:</span>
+            <span class="historico-value">${funcionario.email}</span>
+          </div>
+          <div>
+            <span class="historico-label">Status:</span>
+            <span class="historico-value">${funcionario.ativo ? 'Ativo' : 'Inativo'}</span>
+          </div>
+        </div>
+      </div>
+      <div class="historico-card-body">
+        <button class="btn-clear" data-acao="editar">
+          <i class="fa-solid fa-pen"></i> Editar
+        </button>
+        <button class="btn-clear" data-acao="alternar">
+          <i class="fa-solid fa-power-off"></i> ${funcionario.ativo ? 'Desativar' : 'Ativar'}
+        </button>
+      </div>
+    `
+
+    card.querySelector('[data-acao="editar"]')
+      .addEventListener('click', function () {
+        editarFuncionario(funcionario)
+      })
+
+    card.querySelector('[data-acao="alternar"]')
+      .addEventListener('click', function () {
+        alternarAtivoFuncionario(funcionario)
+      })
+
+    listaFuncionariosEl.appendChild(card)
+  })
+}
+
+async function cadastrarFuncionario() {
+
+  if (!canManageEmployees()) {
+    alert('Você não possui permissão para cadastrar funcionários.')
+    return
+  }
+
+  const nome = document.getElementById('func-nome').value.trim()
+  const email = document.getElementById('func-email').value.trim()
+
+  if (!nome || !email) {
+    alert('Informe nome e e-mail do funcionário.')
+    return
+  }
+
+  const { error } = await banco
+    .from('usuarios')
+    .insert([
+      {
+        nome: nome,
+        email: email,
+        tipo: 'funcionario',
+        ativo: true,
+        empresa_id: empresaAtual.id
+      }
+    ])
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  document.getElementById('func-nome').value = ''
+  document.getElementById('func-email').value = ''
+
+  alert('Funcionário cadastrado!')
+  carregarFuncionarios()
+}
+
+async function editarFuncionario(funcionario) {
+
+  if (!canManageEmployees()) {
+    alert('Você não possui permissão para editar funcionários.')
+    return
+  }
+
+  const novoNome = prompt('Nome do funcionário:', funcionario.nome)
+  if (novoNome === null) return
+
+  const novoEmail = prompt('E-mail do funcionário:', funcionario.email)
+  if (novoEmail === null) return
+
+  const { error } = await banco
+    .from('usuarios')
+    .update({
+      nome: novoNome.trim(),
+      email: novoEmail.trim()
+    })
+    .eq('id', funcionario.id)
+    .eq('empresa_id', empresaAtual.id)
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  carregarFuncionarios()
+}
+
+async function alternarAtivoFuncionario(funcionario) {
+
+  if (!canManageEmployees()) {
+    alert('Você não possui permissão para alterar funcionários.')
+    return
+  }
+
+  const { error } = await banco
+    .from('usuarios')
+    .update({ ativo: !funcionario.ativo })
+    .eq('id', funcionario.id)
+    .eq('empresa_id', empresaAtual.id)
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  carregarFuncionarios()
+}
+
+carregarFuncionarios()
+
+</script>
+
+</body>
+</html>
